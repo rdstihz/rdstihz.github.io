@@ -145,6 +145,83 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh_CN">
+    <link itemprop="mainEntityOfPage" href="http://blog.rdstihz.xyz/2021/07/27/%E6%9A%91%E5%81%87%E9%9B%86%E8%AE%AD%E8%AE%B2%E9%A2%98-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rdstihz">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="这里什么都没有">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/27/%E6%9A%91%E5%81%87%E9%9B%86%E8%AE%AD%E8%AE%B2%E9%A2%98-3/" class="post-title-link" itemprop="url">暑假集训讲题-3</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              <time title="Erstellt: 2021-07-27 10:55:53 / Geändert am: 10:56:07" itemprop="dateCreated datePublished" datetime="2021-07-27T10:55:53+08:00">2021-07-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="第一题"><a href="#第一题" class="headerlink" title="第一题"></a>第一题</h1><h4 id="关键词-思维题-Codeforces"><a href="#关键词-思维题-Codeforces" class="headerlink" title="关键词: 思维题  Codeforces"></a>关键词: 思维题  Codeforces</h4><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1552/problem/B">题目链接</a>  </p>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>有n个选手，参加了5场比赛，已知5场比赛中每位选手的排名。<br>在五场比赛中，如果至少有3场比赛中$a$的排名高于$b$，则认为选手$a$比选手$b$强。如果一名选手比其它所有选手都强，则认为他“很可能得金牌”。请找出“很可能得金牌”的选手。如是不存在输出$-1$,如果存在多个输出任意一个即可。  </p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>本题中选手的相对强弱关系不具有传递性($a$强于$b$, $b$强于$c$, 不能推出$a$强于$c$)，不能简单地对选手进行排序。<br>对于任意两名选手$a$和$b$,要么$a$比$b$强，要么$b$比$a$强，不存在“$a,b$不能判断强弱”的情况（因为是五局三胜）。“很可能得金牌”的选手比其它所有选手都强。任意比较两名选手$a$和$b$，如果$b$比$a$弱，则$b$一定不是“很可能得金牌”的选手。于是，我们可以先比较选手$1$,$2$, 排除掉弱的选手，剩下的一名选手再与$3$比较，再排除掉弱的选手，…依此类推， 最后只剩下一位选手有可能上”很可能得金牌”的选手。但他并不一定是”很可能得金牌”的选手, 因此还要将他与其它所有选手进行比较，如果他比其它所有选手都强，则他是”很可能得金牌”的选手，否则不存在”很可能得金牌”的选手。时间复杂度$O(n)$ </p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">50000</span> + <span class="number">100</span>;</span><br><span class="line"><span class="keyword">int</span> r[maxn][<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">better</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)</span><br><span class="line">        <span class="keyword">if</span>(r[a][i] &lt; r[b][i]) cnt ++;</span><br><span class="line">    <span class="keyword">return</span> cnt &gt;= <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> T;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;T);</span><br><span class="line">    <span class="keyword">while</span>(T--) &#123;</span><br><span class="line">        <span class="keyword">int</span> n;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5</span>; j++) &#123;</span><br><span class="line">                <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;r[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> cur = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(better(i, cur)) cur = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">bool</span> ok = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(i == cur) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span>(better(i, cur)) &#123;</span><br><span class="line">                ok = <span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ok ? cur : <span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="第二题"><a href="#第二题" class="headerlink" title="第二题"></a>第二题</h1><h4 id="关键词-思维题-Codeforces-1"><a href="#关键词-思维题-Codeforces-1" class="headerlink" title="关键词: 思维题  Codeforces"></a>关键词: 思维题  Codeforces</h4><p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1552/problem/F">题目链接</a><br><del>瞎写了一堆代码，比赛结束前16秒，样例没测直接提交，莫名其妙地过了</del></p>
+<h2 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h2><p>一只蚂蚁在数轴上，从$x = 0$开始向正方向移动。数轴上有$n$个传送门，第$i$个传送门位于$x_i$，可将蚂蚁传送至$y_i  (y_i &lt; x_i)$,有些传送门都是激活的，有些传传送门是不激活的。  </p>
+<ul>
+<li>蚂蚁走过一个不激活的传送门，该传送门被激活，蚂蚁继续向前走（不会被传送）。</li>
+<li>蚂蚁走过一个激活的传送门，该传送门变为不激活，同时蚂蚁被传送至$y_i$,然后继续向前走。  </li>
+</ul>
+<p>$n$个传送门满足$x_1 &lt; x_2 &lt; … &lt; x_n$且$x_1, x_2, …, x_n, y_1, y_2, …, y_n$ 这$2n$个整数互不相同。<br>问蚂蚁从$x=0$开始，走到$x=x_n + 1$需要经过的总路程是多少？</p>
+<h2 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h2><p>脑补一下蚂蚁的移动过程，不难发现，当蚂蚁走到一个位置时，他背后的所有传送门，都一定是激活的： 如果一个传送门初始是不激活的，蚂蚁走过它把它激活了。如果初始是激活的，蚂蚁走过它把它取消激活，然后蚂蚁被传回去，蚂蚁必须再次走过这个传送门，把它激活。<br>用一个数组$S_i$表示蚂蚁被第$i$个传送门传回去，再次走到这个传送门所需的时间。可以推出以下递推关系:  </p>
+<ul>
+<li>第一个传送门: $S_1 = x_1 - y_1$</li>
+<li>之后的传送门: $S_i = x_i - y_i + \sum_kS_k$, $k$为$y_i$到$x_i$之间线段上的传送门，即$y_i &lt; x_k &lt; x_i$。   </li>
+</ul>
+<p>递推求出$S$数组即可，朴素做法时间复杂度为$O(n^2)$，可以一边递推一边维护$S$数组的前缀和$SS$, 每次用二分查找找到$y_i$后的第一个传送门，将$SS_{i - 1} - SS_{t-1}$加到$S_i$即可，时间复杂度优化到$O(nlogn)$。<br>最后统计答案， 蚂蚁直接走到终点的贡献为$x_n + 1$，途中每个激活的传送门会让蚂蚁多走$S_i$。</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> LL;</span><br><span class="line"><span class="keyword">const</span> LL P = <span class="number">998244353</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">200000</span> + <span class="number">100</span>;</span><br><span class="line">LL S[maxn], SS[maxn];</span><br><span class="line">LL x[maxn], y[maxn];</span><br><span class="line"><span class="keyword">int</span> s[maxn];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%lld%lld%d&quot;</span>, x + i, y + i, s + i);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> t = lower_bound(x + <span class="number">1</span>, x + <span class="number">1</span> + n, y[i]) - x;</span><br><span class="line">        S[i] = (x[i] - y[i]) + (SS[i - <span class="number">1</span>] - SS[t - <span class="number">1</span>]);</span><br><span class="line">        S[i] = (S[i] % P + P) % P;</span><br><span class="line">        SS[i] = (SS[i - <span class="number">1</span>] + S[i]) % P;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    LL ans = (x[n] + <span class="number">1</span>) % P;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        <span class="keyword">if</span>(s[i] == <span class="number">1</span>)</span><br><span class="line">            ans = (ans + S[i]) % P;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, ans);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="夹带私货"><a href="#夹带私货" class="headerlink" title="夹带私货"></a><del>夹带私货</del></h1><p><del>加个Codeforces好友呗</del><br><a target="_blank" rel="noopener" href="https://codeforces.com/profile/rdstihz">rdstihz</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh_CN">
     <link itemprop="mainEntityOfPage" href="http://blog.rdstihz.xyz/2021/07/26/%E6%9A%91%E5%81%87%E9%9B%86%E8%AE%AD%E8%AE%B2%E9%A2%98-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -168,10 +245,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Veröffentlicht am</span>
-              
 
-              <time title="Erstellt: 2021-07-26 23:40:44 / Geändert am: 23:43:48" itemprop="dateCreated datePublished" datetime="2021-07-26T23:40:44+08:00">2021-07-26</time>
+              <time title="Erstellt: 2021-07-26 23:40:44" itemprop="dateCreated datePublished" datetime="2021-07-26T23:40:44+08:00">2021-07-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Bearbeitet am</span>
+                <time title="Geändert am: 2021-07-27 10:56:18" itemprop="dateModified" datetime="2021-07-27T10:56:18+08:00">2021-07-27</time>
+              </span>
 
           
 
@@ -236,10 +319,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Veröffentlicht am</span>
-              
 
-              <time title="Erstellt: 2021-07-26 23:39:38 / Geändert am: 23:40:38" itemprop="dateCreated datePublished" datetime="2021-07-26T23:39:38+08:00">2021-07-26</time>
+              <time title="Erstellt: 2021-07-26 23:39:38" itemprop="dateCreated datePublished" datetime="2021-07-26T23:39:38+08:00">2021-07-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Bearbeitet am</span>
+                <time title="Geändert am: 2021-07-27 10:56:17" itemprop="dateModified" datetime="2021-07-27T10:56:17+08:00">2021-07-27</time>
+              </span>
 
           
 
@@ -648,9 +737,13 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">Artikel</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">schlagwörter</span>
       </div>
   </nav>
 </div>
